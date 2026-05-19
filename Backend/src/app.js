@@ -1,35 +1,24 @@
-const express=require("express");
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
-const cors=require("cors");
+// ROUTES
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
 
-const authRoutes=require(
-"./routes/authRoutes"
-);
+const app = express();
 
-const app=express();
-
+// MIDDLEWARE
 app.use(cors());
-
 app.use(express.json());
 
+// ROUTES
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
-app.use(
-
-"/api/auth",
-
-authRoutes
-
-);
-
-
-app.get("/",(req,res)=>{
-
-res.send(
-
-"EquiCart Backend Running"
-
-);
-
+// TEST ROUTE
+app.get("/", (req, res) => {
+  res.send("EquiCart Backend Running 🚀");
 });
 
-module.exports=app;
+module.exports = app;
