@@ -1,11 +1,16 @@
-import {Routes,Route} from "react-router-dom";
+import {
+Routes,
+Route
+}
+from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products";
-
-import ProtectedRoute from "../components/ProtectedRoute";
+import Cart from "../pages/Cart";
+import Orders from "../pages/Orders";
+import AdminDashboard from "../pages/AdminDashboard";
 
 function AppRoutes(){
 
@@ -13,26 +18,39 @@ return(
 
 <Routes>
 
-<Route path="/login" element={<Login/>}/>
+<Route
+path="/"
+element={<Login/>}
+/>
 
-<Route path="/register" element={<Register/>}/>
+<Route
+path="/register"
+element={<Register/>}
+/>
 
 <Route
 path="/dashboard"
-element={
-<ProtectedRoute>
-<Dashboard/>
-</ProtectedRoute>
-}
+element={<Dashboard/>}
 />
 
 <Route
 path="/products"
-element={
-<ProtectedRoute>
-<Products/>
-</ProtectedRoute>
-}
+element={<Products/>}
+/>
+
+<Route
+path="/cart"
+element={<Cart/>}
+/>
+
+<Route
+path="/orders"
+element={<Orders/>}
+/>
+
+<Route
+path="/admin"
+element={<AdminDashboard/>}
 />
 
 </Routes>
@@ -41,4 +59,4 @@ element={
 
 }
 
-export default AppRoutes
+export default AppRoutes;
