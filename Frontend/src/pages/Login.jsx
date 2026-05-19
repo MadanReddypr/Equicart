@@ -1,56 +1,132 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
 
-const Login = () => {
-  const { login } = useAuth();
+import { useNavigate } from "react-router-dom";
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+import api from "../services/api";
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+const Login=()=>{
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const navigate=useNavigate();
 
-    login(formData.email, formData.password);
+const [formData,setFormData]=useState({
 
-    alert("Login Successful");
-  };
+email:"",
+password:""
 
-  return (
-    <div>
-      <h1>Login Page</h1>
+});
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          onChange={handleChange}
-        />
+const handleChange=(e)=>{
 
-        <br /><br />
+setFormData({
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          onChange={handleChange}
-        />
+...formData,
 
-        <br /><br />
+[e.target.name]:
+e.target.value
 
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
+});
+
+};
+
+
+const handleSubmit=async(e)=>{
+
+e.preventDefault();
+
+try{
+
+const response=
+
+await api.post(
+
+"/auth/login",
+
+formData
+
+);
+
+localStorage.setItem(
+
+"token",
+
+response.data.token
+
+);
+
+alert(
+
+response.data.message
+
+);
+
+navigate("/dashboard");
+
+}
+
+catch(error){
+
+alert(
+
+error.response.data.message
+);
+
+}
+
+};
+
+
+return(
+
+<div>
+
+<h1>Login</h1>
+
+<form
+onSubmit={handleSubmit}
+>
+
+<input
+
+type="email"
+
+name="email"
+
+placeholder="Enter Email"
+
+onChange={handleChange}
+
+/>
+
+<br/><br/>
+
+
+<input
+
+type="password"
+
+name="password"
+
+placeholder="Enter Password"
+
+onChange={handleChange}
+
+/>
+
+<br/><br/>
+
+
+<button type="submit">
+
+Login
+
+</button>
+
+</form>
+
+</div>
+
+);
+
 };
 
 export default Login;
